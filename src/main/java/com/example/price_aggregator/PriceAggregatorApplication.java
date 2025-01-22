@@ -9,5 +9,4 @@ public class PriceAggregatorApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PriceAggregatorApplication.class, args);
 	}
-
 }
