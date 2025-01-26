@@ -1,9 +1,9 @@
-package com.example.price_aggregator.user.service;
+package com.example.price_aggregator.user;
 
-import com.example.price_aggregator.user.controller.UserNotFoundException;
-import com.example.price_aggregator.user.domain.User;
-import com.example.price_aggregator.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -29,5 +29,11 @@ public class UserService {
 
     public void deleteUser(final UUID userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

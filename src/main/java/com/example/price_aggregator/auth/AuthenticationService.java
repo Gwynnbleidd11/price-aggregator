@@ -1,14 +1,17 @@
 package com.example.price_aggregator.auth;
 
 import com.example.price_aggregator.config.JwtService;
-import com.example.price_aggregator.user.domain.Role;
-import com.example.price_aggregator.user.domain.User;
-import com.example.price_aggregator.user.repository.UserRepository;
+import com.example.price_aggregator.user.Role;
+import com.example.price_aggregator.user.User;
+import com.example.price_aggregator.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +28,8 @@ public class AuthenticationService {
                 .lastName(reqRequest.getLastName())
                 .email(reqRequest.getEmail())
                 .password(passwordEncoder.encode(reqRequest.getPassword()))
-                .role(Role.USER)
+                .role(Role.valueOf(reqRequest.getRole()))
+                .creationDate(LocalDate.now())
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -41,7 +45,8 @@ public class AuthenticationService {
                         authRequest.getPassword()
                 )
         );
-        var user = userRepository.findByEmail(authRequest.getEmail()).orElseThrow(); //Implement proper exception
+        var user = userRepository.findByEmail(authRequest.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found")); //Implement proper error handling
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

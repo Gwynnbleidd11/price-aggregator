@@ -1,4 +1,4 @@
-package com.example.price_aggregator.user.domain;
+package com.example.price_aggregator.user;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -9,6 +9,7 @@ public record UserDto(
         String lastName,
         LocalDate creationDate,
         String email,
-        String password
+        String password,
+        String role
 ) {
 }

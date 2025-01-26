@@ -1,6 +1,5 @@
-package com.example.price_aggregator.user.repository;
+package com.example.price_aggregator.user;
 
-import com.example.price_aggregator.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
