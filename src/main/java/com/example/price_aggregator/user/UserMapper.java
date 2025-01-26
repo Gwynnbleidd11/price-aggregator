@@ -1,7 +1,5 @@
-package com.example.price_aggregator.user.mapper;
+package com.example.price_aggregator.user;
 
-import com.example.price_aggregator.user.domain.User;
-import com.example.price_aggregator.user.domain.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
