@@ -1,5 +1,6 @@
 package com.example.price_aggregator.auth;
 
+import com.example.price_aggregator.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> registerUser(@RequestBody RegisterRequest regRequest) {
-        return ResponseEntity.ok(authenticationService.register(regRequest));
+        return ResponseEntity.ok(authenticationService.register(regRequest, Role.USER));
     }
 
     @PostMapping("/authenticate")

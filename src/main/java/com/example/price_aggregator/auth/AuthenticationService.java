@@ -22,13 +22,13 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest reqRequest) {
+    public AuthenticationResponse register(RegisterRequest reqRequest, Role role) {
         var user = User.builder()
                 .firstName(reqRequest.getFirstName())
                 .lastName(reqRequest.getLastName())
                 .email(reqRequest.getEmail())
                 .password(passwordEncoder.encode(reqRequest.getPassword()))
-                .role(Role.valueOf(reqRequest.getRole()))
+                .role(role)
                 .creationDate(LocalDate.now())
                 .build();
         userRepository.save(user);
